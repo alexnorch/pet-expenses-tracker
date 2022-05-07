@@ -4,10 +4,12 @@ import { db } from "../../util/firebase-config";
 import { deleteDoc, doc } from "firebase/firestore";
 
 // Mui material
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 
-//Muy components
+//My components
 import Modal from "../ui/Modal";
 import EditExpense from "./EditExpense";
 
@@ -16,16 +18,14 @@ const ExpenseItem = ({ title, date, amount, category, id }) => {
   const [isDeleting, setIsDeleting] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const isOpen = Boolean(anchorEl);
+  const elemId = isOpen ? "action-popover" : undefined;
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const isOpen = Boolean(anchorEl);
-  const elemId = isOpen ? "action-popover" : undefined;
+  const handleClose = () => setAnchorEl(null);
 
   const showEditPanel = () => {
     setIsEditing(true)
@@ -49,12 +49,12 @@ const ExpenseItem = ({ title, date, amount, category, id }) => {
 
   return (
     <>
-    <tr className="expense-item">
-      <td>{title}</td>
-      <td>{category}</td>
-      <td>{amount}$</td>
-      <td>{date}</td>
-      <td className="expense-actions">
+    <TableRow sx={{backgroundColor: '#fff' }}>
+      <TableCell>{title}</TableCell>
+      <TableCell>{category}</TableCell>
+      <TableCell>{amount}$</TableCell>
+      <TableCell>{date}</TableCell>
+      <TableCell sx={{width: '10%'}}>
         <Button
           aria-describedby={elemId}
           variant="outlined"
@@ -87,8 +87,8 @@ const ExpenseItem = ({ title, date, amount, category, id }) => {
             </button>
           </div>
         </Popover>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
     <Modal
       title="Edit expense"
       isShowing={isEditing}
@@ -109,11 +109,8 @@ const ExpenseItem = ({ title, date, amount, category, id }) => {
         <div className="button-group">
         <Button
           onClick={deleteExpenseHandler}
-          style={{
-            background: "#D64444",
-            color: "#fff",
-            marginRight: '10px'
-          }}
+          sx={{marginRight: 1}}
+          color="error"
           type="submit"
           variant="contained"
         >

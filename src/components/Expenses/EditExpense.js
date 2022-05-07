@@ -54,7 +54,6 @@ const EditExpense = ({date, amount, title, category, id, onCloseModal}) => {
               name="title"          
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              id="standard-basic"
               label="Title"
               variant="standard"
             />
@@ -64,7 +63,6 @@ const EditExpense = ({date, amount, title, category, id, onCloseModal}) => {
               name='date'
               value={newDate}
               onChange={(e) => setNewDate(e.target.value)}
-              id="standard-basic"
               label="Date"
               variant="standard"
             />
@@ -75,7 +73,6 @@ const EditExpense = ({date, amount, title, category, id, onCloseModal}) => {
               value={newAmount}
               name="amount"
               onChange={(e) => setNewAmount(e.target.value)}
-              id="standard-basic"
               label="Amount"
               variant="standard"
             />

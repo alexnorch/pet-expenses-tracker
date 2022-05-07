@@ -1,7 +1,6 @@
 import Layout from "./components/layout/Layout";
 import { Routes, Route } from "react-router-dom";
 import Expenses from "./components/Expenses/Expenses";
-import Homepage from "./components/layout/Homepage";
 import Savings from "./components/Savings/Savings";
 
 const App = () => {

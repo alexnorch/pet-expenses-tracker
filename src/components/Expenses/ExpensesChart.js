@@ -31,7 +31,7 @@ const ExpensesChart = () => {
   ) {
     return accumulator + Number(currentValue.data.amount);
   },
-  0);
+    0);
 
   const yearExpensesQuantity = expensesData.reduce(function (
     accumulator,
@@ -39,16 +39,16 @@ const ExpensesChart = () => {
   ) {
     return accumulator + Number(currentValue.data.amount);
   },
-  0);
+    0);
 
   return (
-      <Chart
-        title="Expenses Overview"
-        yearAmount={yearExpensesQuantity}
-        monthAmount={monthExpensesQuantity}
-        currentMonth={displayMonth(currentMonth)}
-      >
-        <ResponsiveContainer width="100%" height="100%">
+    <Chart
+      title="Expenses Overview"
+      yearAmount={yearExpensesQuantity}
+      monthAmount={monthExpensesQuantity}
+      currentMonth={displayMonth(currentMonth)}
+    >
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={monthExpenses.map((item) => ({
             amount: Number(item.data.amount),
@@ -68,9 +68,9 @@ const ExpensesChart = () => {
           <Legend />
           <Bar dataKey="amount" fill="#4EDF62" />
         </BarChart>
-        </ResponsiveContainer>
-      </Chart>
-    
+      </ResponsiveContainer>
+    </Chart>
+
   );
 };
 

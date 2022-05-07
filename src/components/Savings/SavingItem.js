@@ -91,16 +91,13 @@ const SavingItem = (props) => {
             value={changedAmount}
             onChange={(e) => setChangedAmount(e.target.value)}
             helperText="Please enter an amount you want to put on this saving"
-            id="outlined-basic"
             type="number"
             label="Amount"
             variant="standard"
           />
         </div>
         <div className="button-group">
-          <Button onClick={updateAmountHandler} variant="contained">
-            Put
-          </Button>
+          <Button onClick={updateAmountHandler} variant="contained">Put </Button>
         </div>
       </Modal>
     </>

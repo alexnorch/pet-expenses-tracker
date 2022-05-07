@@ -5,21 +5,11 @@ import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 
-//My components
-import Modal from "../ui/Modal";
-
 //Firebase
 import { db } from "../../util/firebase-config";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
-const EditingSaving = ({
-  title,
-  description,
-  reached,
-  goal,
-  id,
-  onCloseModal,
-}) => {
+const EditingSaving = ({ title, description, reached, goal, id,onCloseModal,}) => {
   const [newTitle, setNewTitle] = useState(title);
   const [newDescr, setNewDescr] = useState(description);
   const [newReached, setNewReached] = useState(reached);
@@ -30,11 +20,11 @@ const EditingSaving = ({
   const editSavingHandler = async (e) => {
     e.preventDefault();
 
-    const newData = {
-      title: newTitle,
-      description: newDescr,
-      reached: newReached,
-      goal: newGoal,
+    const newData = { 
+      title: newTitle, 
+      description: newDescr, 
+      reached: newReached, goal: 
+      newGoal
     };
 
     try {
@@ -44,8 +34,6 @@ const EditingSaving = ({
       console.log(error);
     }
   };
-
-
 
   const deleteSavingHandler = async () => {
     try {
@@ -60,9 +48,7 @@ const EditingSaving = ({
       <Box
         onSubmit={editSavingHandler}
         component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "100%" },
-        }}
+        sx={{"& .MuiTextField-root": { m: 1, width: "100%" } }}
         noValidate
         autoComplete="off"
       >
@@ -71,7 +57,6 @@ const EditingSaving = ({
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             helperText="Please enter title of your saving goal"
-            id="outlined-basic"
             label="Title"
             variant="standard"
           />
@@ -81,7 +66,6 @@ const EditingSaving = ({
             value={newDescr}
             onChange={(e) => setNewDescr(e.target.value)}
             helperText="Description of your saving goal"
-            id="outlined-basic"
             label="Description"
             variant="standard"
           />
@@ -91,7 +75,6 @@ const EditingSaving = ({
             value={newReached}
             onChange={(e) => setNewReached(e.target.value)}
             helperText="Enter amount of money you have right now"
-            id="standard-number"
             label="Start amount"
             type="number"
             variant="standard"
@@ -102,7 +85,6 @@ const EditingSaving = ({
             value={newGoal}
             onChange={(e) => setNewGoal(e.target.value)}
             helperText="Enter desire amount of money"
-            id="standard-number"
             label="Goal amount"
             type="number"
             variant="standard"
@@ -114,9 +96,7 @@ const EditingSaving = ({
             onClick={deleteSavingHandler}
             type='button'
             color='error'
-            style={{
-              marginRight: 5
-            }}
+            sx={{marginRight: 1}}
             variant="contained"
           >
             Delete

@@ -1,4 +1,6 @@
 import { useState, forwardRef } from "react";
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
 
 //Mui materials
 import { TextField } from "@mui/material";
@@ -22,79 +24,37 @@ const NewSaving = () => {
 
   const [isModalActive, setIsModalActive] = useState(false);
   const [snackOpen, setSnackOpen] = useState(false);
-
-  const [title, setTitle] = useState("");
-  const [descr, setDescr] = useState("");
-  const [startAmount, setStartAmount] = useState("");
-  const [desireAmount, setDesireAmount] = useState("");
-  const [hasErrors, setHasErrors] = useState({})
-
   const savingCollection = collection(db, "savings");
 
-  const showModal = () => {
-    setIsModalActive(true)
-  }
-
-  const closeModal = () => {
-    setIsModalActive(prevState => !prevState)
-    setHasErrors({})
-  }
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setSnackOpen(false);
-  };
-
-  const validateValues = () => {
-    const errors = {}
-
-    if (title === '' || title.length < 6) {
-      errors.title = 'Must contain at last 6 characters'
-    }
-
-    if (descr === '' || descr.length < 6) {
-      errors.descr = 'Must contain at last 6 characters'
-    }
-
-    if (startAmount === '' || Number(startAmount) < 0) {
-      errors.startAmount = 'Must be greater then  0'
-    }
-
-    if (desireAmount === '') {
-      errors.desireAmount = 'Must not be empty'
-    }
-
-    if (Object.keys(errors).length == 0) {
-      return true
-    } else {
-      return setHasErrors(errors)
-    }
-  }
-
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const savingData = {
-      title: title,
-      description: descr,
-      reached: startAmount,
-      goal: desireAmount,
-    };
-
-    if (validateValues()) {
-      addDoc(savingCollection, savingData);
+  const { values, handleChange, handleSubmit, errors } = useFormik({
+    initialValues: { title: '', description: '', reached: '', goal: ''},
+    validationSchema: Yup.object({
+      title: Yup.string()
+        .min(6, 'Must be greater than 6 characters')
+        .required('Title is required'),
+      description: Yup.string()
+        .min(6, 'Must be greater than 6 characters')
+        .required('Description is required'),
+      reached: Yup.number()
+        .required('Reached amount is required')
+        .positive('Must be a positive value'),
+      goal: Yup.number()
+        .required('Goal is required')
+        .positive('Must be a positive value')
+    }),
+    onSubmit: async (values) => {
+      await addDoc(savingCollection, values);
       closeModal(false);
       setSnackOpen(true);
-  
-      setDescr("");
-      setTitle("");
-      setDesireAmount("");
-      setStartAmount("");
     }
+  })
+
+  const showModal = () => { setIsModalActive(true) }
+  const closeModal = () => setIsModalActive(prevState => !prevState)
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") return;
+    setSnackOpen(false);
   };
 
   return (
@@ -109,43 +69,40 @@ const NewSaving = () => {
           isShowing={isModalActive}
           toggle={closeModal}>
           <Box
-            onSubmit={submitHandler}
             component="form"
-            sx={{
-              "& .MuiTextField-root": { m: 1, width: "100%" },
-            }}
+            sx={{ "& .MuiTextField-root": { m: 1, width: "100%" } }}
             noValidate
             autoComplete="off"
           >
             <div className="input-group">
               <TextField
-                error={hasErrors.title? true : false}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                helperText={hasErrors.title || "Please enter title of your saving goal"}
-                id="outlined-basic"
+                name='title'
+                error={errors.title}
+                value={values.title}
+                onChange={handleChange}
+                helperText={errors.title || "Please enter title of your saving goal"}
                 label="Title"
                 variant="standard"
               />
             </div>
             <div className="input-group">
               <TextField
-                error={hasErrors.descr? true : false}
-                value={descr}
-                onChange={(e) => setDescr(e.target.value)}
-                helperText={hasErrors.descr || "Description of your saving goal"}
-                id="outlined-basic"
+                name='description'
+                error={errors.description}
+                value={values.description}
+                onChange={handleChange}
+                helperText={errors.description || "Description of your saving goal"}
                 label="Description"
                 variant="standard"
               />
             </div>
             <div className="input-group">
               <TextField
-                error={hasErrors.startAmount? true : false}
-                value={startAmount}
-                onChange={(e) => setStartAmount(e.target.value)}
-                helperText={hasErrors.startAmount || "Enter amount of money you have right now"}
-                id="standard-number"
+                name='reached'
+                error={errors.reached}
+                value={values.reached}
+                onChange={handleChange}
+                helperText={errors.reached || "Enter amount of money you have right now"}
                 label="Start amount"
                 type="number"
                 variant="standard"
@@ -153,20 +110,21 @@ const NewSaving = () => {
             </div>
             <div className="input-group">
               <TextField
-                error={hasErrors.desireAmount? true : false}
-                value={desireAmount}
-                onChange={(e) => setDesireAmount(e.target.value)}
-                helperText={hasErrors.desireAmount || "Enter desire amount of money"}
-                id="standard-number"
+                name='goal'
+                error={errors.goal}
+                value={values.goal}
+                onChange={handleChange}
+                helperText={errors.goal || "Enter desire amount of money"}
                 label="Goal amount"
                 type="number"
                 variant="standard"
               />
             </div>
             <div className="button-group">
-              <Button type="submit" variant="contained">
-                Add
-              </Button>
+              <Button
+                onClick={handleSubmit} 
+                type="submit" 
+                variant="contained"> Add </Button>
             </div>
           </Box>
         </Modal>
