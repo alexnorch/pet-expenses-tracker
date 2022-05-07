@@ -2,12 +2,9 @@
 
 ![application image](https://i.ibb.co/wB7Ljz7/photo-2022-05-06-13-10-05.jpg)
 
-## Home page
-
-* Fetching data from The Movie Database (TMDB)
-
-## Movie details page
-
-## Category page
-
-## Authorization page
+## Functionalities
+- Fetching data from API
+- Searching movies in Navbar
+- Authorization with Firebase
+- Routing with react-router-dom@6
+- Ability to add/remove favorite movie in profile
