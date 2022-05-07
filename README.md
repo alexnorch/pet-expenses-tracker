@@ -4,6 +4,8 @@
 
 ## Home page
 
+* Fetching data from The Movie Database (TMDB)
+
 ## Movie details page
 
 ## Category page
