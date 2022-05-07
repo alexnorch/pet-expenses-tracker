@@ -1,3 +1,3 @@
 # Netflix clone (React.js + Redux toolkit)
 
-![application image](https://norch-developer.com/images/netflix.jpg)
+![application image](https://ibb.co/Ntr3byr)
