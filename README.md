@@ -1,1 +1,1 @@
-# Netflix clone (React.js + Redux toolkig)
+# Netflix clone (React.js + Redux toolkit)
